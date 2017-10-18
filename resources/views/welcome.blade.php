@@ -9,12 +9,15 @@
     </head>
     <body>
         <form method="post" action="https://{{ config('filesystems.disks.s3.bucket') }}.s3.amazonaws.com" enctype="multipart/form-data">
-            <input type="hidden" name="AWSAccessKeyId" value="{{ config('filesystems.disks.s3.key') }}">
+            <input type="hidden" name="policy" value="{{ $policy }}">
+            <input type="hidden" name="x-amz-algorithm" value="AWS4-HMAC-SHA256">
+            <input type="hidden" name="x-amz-credential" value="{{ $credential }}">
+            <input type="hidden" name="x-amz-date" value="{{ $date->format('Ymd\THis\Z') }}">
+            <input type="hidden" name="x-amz-signature" value="{{ $signature }}">
+
             <input type="hidden" name="acl" value="private">
             <input type="hidden" name="key" value="${filename}">
-            <input type="hidden" name="policy" value="{{ $policy }}">
             <input type="hidden" name="success_action_redirect" value="{{ url('/s3-upload') }}">
-            <input type="hidden" name="signature" value="{{ $signature }}">
             <input type="file" name="file">
             <button type="submit">Upload</button>
         </form>
