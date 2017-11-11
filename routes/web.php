@@ -39,7 +39,6 @@ function createPolicy($credential) {
             ['bucket' => config('filesystems.disks.s3.bucket')],
             ['acl' => 'private'],
             ['starts-with', '$key', ''],
-            ['eq', '$success_action_redirect', url('/s3-upload')],
             ['x-amz-algorithm' => 'AWS4-HMAC-SHA256'],
             ['x-amz-credential' => $credential],
             ['x-amz-date' => now()->format('Ymd\THis\Z')],
